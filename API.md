@@ -27,12 +27,16 @@ Return: Promise - will resolve arguments:
 
 * `options` Object
   * `region` String - a S3 Region (default: eu-west-1)
-  * `identity_pool_id` String - the Amazon Cogntio identity pool
   * `cognito_region` String - a Cognito Region (default: eu-west-1)
+  * `identity_pool_id` String - the Amazon Cogntio identity pool
+  * `identity_id` String - the IdentityID if providing developer authenticated credentials (optional)
+  * `token` String - The Token if providing developer authenticated credentials (optional)
   * `caching` Boolean - use `CognitoCachingCredentialsProvider` instead of `CognitoCredentialsProvider` __(Android)__
   * `remember_last_instance` Boolean - keep the last transferUtility instance when JS reload (default: true) __(iOS)__
 
 See AWS CognitoCredentialsProvider ([iOS](http://docs.aws.amazon.com/AWSiOSSDK/latest/Classes/AWSCognitoCredentialsProvider.html)/[Android](http://docs.aws.amazon.com/AWSAndroidSDK/latest/javadoc/com/amazonaws/auth/CognitoCredentialsProvider.html)) for more information.
+
+If using developer provided credentials, `identity_id` and `token` are required. Also refer to following documentation: [Cognito Auth Flow](http://docs.aws.amazon.com/cognito/latest/developerguide/authentication-flow.html) for a better understanding of the overall authentication process, [Developer Authenticated Identities](http://docs.aws.amazon.com/cognito/latest/developerguide/developer-authenticated-identities.html) for implementation details.
 
 Return: Promise - will resolve arguments:
 * Boolean - `true` or `false` depending on the setup successful.
@@ -118,7 +122,7 @@ Subscribe the task changes with the given id.
 
 * `id` Number - a Task id
 * `eventHandler` Function - arguments:
-  * `err` Object - error information object or null if no error 
+  * `err` Object - error information object or null if no error
   * `task` Object - a [Task](#the-task-object-structure) object
 
 #### `transferUtility.unsubscribe(id, eventHandler)`

@@ -157,18 +157,19 @@ public class RNS3TransferUtility extends ReactContextBaseJavaModule {
         break;
       // TODO: support accountId, unauthRoleArn, authRoleArn
       case COGNITO:
-        String cognitoRegion = (String) credentialsOptions.get("cognito_region");
+        Regions cognitoRegion = Regions.fromName((String) credentialsOptions.get("cognito_region"));
+        String identityPoolId = (String) credentialsOptions.get("identity_pool_id");
+        String identityId = (String) credentialsOptions.get("identity_id");
+        String token = (String) credentialsOptions.get("token");
+        // Setup the identity provider
+        RNS3CognitoIdentityProvider developerProvider = new RNS3CognitoIdentityProvider(null, identityPoolId, cognitoRegion);
+        developerProvider.setToken( token );
+        developerProvider.setIdentityId( identityId );
+        // Setup the credentials provider
         if (!(Boolean) credentialsOptions.get("caching")) {
-          credentialsProvider = new CognitoCredentialsProvider(
-            (String) credentialsOptions.get("identity_pool_id"),
-            Regions.fromName(cognitoRegion)
-          );
+          credentialsProvider = new CognitoCredentialsProvider(developerProvider, cognitoRegion);
         } else {
-          credentialsProvider = new CognitoCachingCredentialsProvider(
-            context,
-            (String) credentialsOptions.get("identity_pool_id"),
-            Regions.fromName(cognitoRegion)
-          );
+          credentialsProvider = new CognitoCachingCredentialsProvider(context, developerProvider, cognitoRegion);
         }
         break;
       // TODO: support STS
@@ -218,6 +219,8 @@ public class RNS3TransferUtility extends ReactContextBaseJavaModule {
     Map<String, Object> credentialsOptions = new HashMap<String, Object>();
     credentialsOptions.put("type", CredentialType.COGNITO);
     credentialsOptions.put("identity_pool_id", options.getString("identity_pool_id"));
+    credentialsOptions.put("identity_id", options.getString("identity_id"));
+    credentialsOptions.put("token", options.getString("token"));
     credentialsOptions.put("region", options.getString("region"));
     credentialsOptions.put("cognito_region", options.getString("cognito_region"));
     credentialsOptions.put("caching", options.getBoolean("caching"));

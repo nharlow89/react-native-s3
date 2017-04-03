@@ -15,7 +15,7 @@ const defaultCognitoOptions = {
 };
 const storeKey = "@_RNS3_Tasks_Extra";
 /*
- * taskExtra: 
+ * taskExtra:
  *	 [id]:
  *		 iOS: { bucket, key, state, bytes, totalBytes }
  *		 Android: { bucket, key, bytes }
@@ -116,6 +116,9 @@ export default class TransferUtility {
 	async setupWithCognito(options = {}) {
 		const opts = snakeCaseKeys(options);
 		if (!opts.identity_pool_id) {
+			return false;
+		}
+		if (!opts.identity_id !== !opts.token) {
 			return false;
 		}
 		const result = await RNS3TransferUtility.setupWithCognito({ ...defaultCognitoOptions, ...opts });

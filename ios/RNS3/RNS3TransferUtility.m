@@ -1,5 +1,6 @@
 #import "RNS3TransferUtility.h"
 #import "RNS3STSCredentialsProvider.h"
+#import "RNS3CognitoIdentityProvider.h"
 
 static NSMutableDictionary *nativeCredentialsOptions;
 static bool alreadyInitialize = false;
@@ -106,7 +107,6 @@ static NSString* instanceKey = @"RNS3TransferUtility";
             NSString *accessKey = options[@"access_key"];
             NSString *secretKey = options[@"secret_key"];
             NSString *sessionKey = options[@"session_token"];
-
             if (sessionKey) {
                 credentialsProvider = [[RNS3STSCredentialsProvider alloc] initWithAccessKey:accessKey
                                                                               secretKey:secretKey
@@ -115,16 +115,23 @@ static NSString* instanceKey = @"RNS3TransferUtility";
                 credentialsProvider = [[AWSStaticCredentialsProvider alloc] initWithAccessKey:accessKey
                                                                                     secretKey:secretKey];
             }
-
             break;
         }
         case COGNITO: {
             AWSRegionType region = [self regionTypeFromString:options[@"cognito_region"]];
+            NSString *token = options[@"token"];
+            NSString *identityId = options[@"identity_id"];
             NSString *identityPoolId = options[@"identity_pool_id"];
-
-            credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:region
-                                                                             identityPoolId:identityPoolId];
-
+            
+            RNS3CognitoIdentityProvider *authProvider = [[RNS3CognitoIdentityProvider alloc] initWithRegionType:region
+                                                 identityPoolId:identityPoolId
+                                                useEnhancedFlow:YES
+                                        identityProviderManager:nil];
+            [authProvider setToken:token identityId:identityId];
+            
+            credentialsProvider = [[AWSCognitoCredentialsProvider alloc]
+                                                          initWithRegionType:region
+                                                          identityProvider:authProvider];
             break;
         }
         default:
@@ -143,7 +150,6 @@ static NSString* instanceKey = @"RNS3TransferUtility";
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(setupWithNative: (RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
-
   resolve(@([self setup:nativeCredentialsOptions]));
 }
 
