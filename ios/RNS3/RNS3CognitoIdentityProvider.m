@@ -1,7 +1,7 @@
-#import "RNS3DeveloperAuthenticatedIdentityProvider.h"
+#import "RNS3CognitoIdentityProvider.h"
 
 
-@implementation RNS3DeveloperAuthenticatedIdentityProvider
+@implementation RNS3CognitoIdentityProvider
 
 -(void)setToken:(NSString *)token
                    identityId:(NSString *)identityId {
