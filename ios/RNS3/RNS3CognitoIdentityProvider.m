@@ -11,10 +11,8 @@
 
 - (AWSTask <NSString*> *) token {
     if( !self._token ) {
-        NSLog(@"FUCK token unauthenticated");
         return [AWSTask taskWithResult:nil];
     }else{
-        NSLog(@"FUCK token authenticated");
         return [AWSTask taskWithResult:self._token];
     }
 }
@@ -24,10 +22,8 @@
  */
 - (AWSTask<NSDictionary<NSString *, NSString *> *> *)logins {
     if( !self._token ) {
-        NSLog(@"FUCK logins unauthenticated");
         return [AWSTask taskWithResult:nil];
     }else{
-        NSLog(@"FUCK logins authenticated");
         return [super logins];
     }
 }
