@@ -11,6 +11,7 @@
 		7F27385A1C86C7650094B90C /* AWSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2738571C86C7650094B90C /* AWSCore.framework */; };
 		7F27385B1C86C7650094B90C /* AWSS3.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2738581C86C7650094B90C /* AWSS3.framework */; };
 		7FE73D9A1C83BE1000A267C9 /* RNS3TransferUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FE73D991C83BE1000A267C9 /* RNS3TransferUtility.m */; };
+		88A476B11EB3D5FE004F33F3 /* RNS3CognitoIdentityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A476AF1EB3D5FE004F33F3 /* RNS3CognitoIdentityProvider.m */; };
 		D2689E6B1CEC7FDB001CA85B /* RNS3STSCredentialsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D2689E6A1CEC7FDB001CA85B /* RNS3STSCredentialsProvider.m */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,8 @@
 		7F2738581C86C7650094B90C /* AWSS3.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSS3.framework; sourceTree = "<group>"; };
 		7FE73D981C83BE1000A267C9 /* RNS3TransferUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNS3TransferUtility.h; sourceTree = "<group>"; };
 		7FE73D991C83BE1000A267C9 /* RNS3TransferUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNS3TransferUtility.m; sourceTree = "<group>"; };
+		88A476AF1EB3D5FE004F33F3 /* RNS3CognitoIdentityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNS3CognitoIdentityProvider.m; sourceTree = "<group>"; };
+		88A476B01EB3D5FE004F33F3 /* RNS3CognitoIdentityProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNS3CognitoIdentityProvider.h; sourceTree = "<group>"; };
 		D2689E691CEC7FDB001CA85B /* RNS3STSCredentialsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNS3STSCredentialsProvider.h; sourceTree = "<group>"; };
 		D2689E6A1CEC7FDB001CA85B /* RNS3STSCredentialsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNS3STSCredentialsProvider.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -81,6 +84,8 @@
 		7F2E871D1C7E497F00E907E8 /* RNS3 */ = {
 			isa = PBXGroup;
 			children = (
+				88A476AF1EB3D5FE004F33F3 /* RNS3CognitoIdentityProvider.m */,
+				88A476B01EB3D5FE004F33F3 /* RNS3CognitoIdentityProvider.h */,
 				7FE73D981C83BE1000A267C9 /* RNS3TransferUtility.h */,
 				7FE73D991C83BE1000A267C9 /* RNS3TransferUtility.m */,
 				D2689E691CEC7FDB001CA85B /* RNS3STSCredentialsProvider.h */,
@@ -164,6 +169,7 @@
 			files = (
 				D2689E6B1CEC7FDB001CA85B /* RNS3STSCredentialsProvider.m in Sources */,
 				7FE73D9A1C83BE1000A267C9 /* RNS3TransferUtility.m in Sources */,
+				88A476B11EB3D5FE004F33F3 /* RNS3CognitoIdentityProvider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

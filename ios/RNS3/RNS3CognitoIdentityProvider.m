@@ -20,7 +20,7 @@
 /**
  * For now assuming that if _token is not set we are running in un-authenticated mode.
  */
-- (AWSTask<NSDictionary<NSString *, NSString *> *> *)logins {
+- (AWSTask<NSDictionary<NSString *, NSString *> *> *) logins {
     if( !self._token ) {
         return [AWSTask taskWithResult:nil];
     }else{

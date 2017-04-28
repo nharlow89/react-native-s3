@@ -18,24 +18,19 @@ public class RNS3CognitoIdentityProvider extends AWSAbstractCognitoDeveloperIden
 
     @Override
     public String refresh() {
-        // Override the existing token
-        setToken(null);
         // TODO: provide opportunity for app to refresh the authenticated token/identityId over the JS bridge
+        // Override the existing token
+        // setToken(null);
         update(identityId, token);
         return token;
     }
 
+    public void setDeveloperAuthenticatedIdentity(String identityId, String token) {
+        setIdentityId( identityId );
+        setToken( token );
+    }
+
     public void setDeveloperProvider(String developerProvider) {
         this.developerProvider = developerProvider;
-    }
-
-    @Override
-    protected void setToken(String token) {
-        super.setToken(token);
-    }
-
-    @Override
-    protected void setIdentityId(String identityId) {
-        super.setIdentityId(identityId);
     }
 }

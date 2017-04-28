@@ -119,15 +119,18 @@ static NSString* instanceKey = @"RNS3TransferUtility";
         }
         case COGNITO: {
             AWSRegionType region = [self regionTypeFromString:options[@"cognito_region"]];
-            NSString *token = options[@"token"];
-            NSString *identityId = options[@"identity_id"];
             NSString *identityPoolId = options[@"identity_pool_id"];
-            
+            // Setup the identity provider
             RNS3CognitoIdentityProvider *authProvider = [[RNS3CognitoIdentityProvider alloc] initWithRegionType:region
                                                  identityPoolId:identityPoolId
                                                 useEnhancedFlow:YES
                                         identityProviderManager:nil];
-            [authProvider setToken:token identityId:identityId];
+            // If using developer authenticated credentials, pass those along to identity provider
+            if ( [options objectForKey:@"token"] != nil && [options objectForKey:@"identity_id"] != nil ) {
+                NSString *token = options[@"token"];
+                NSString *identityId = options[@"identity_id"];
+                [authProvider setToken:token identityId:identityId];
+            }
             
             credentialsProvider = [[AWSCognitoCredentialsProvider alloc]
                                                           initWithRegionType:region

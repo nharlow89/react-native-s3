@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSCredentialsProvider;
@@ -159,12 +160,14 @@ public class RNS3TransferUtility extends ReactContextBaseJavaModule {
       case COGNITO:
         Regions cognitoRegion = Regions.fromName((String) credentialsOptions.get("cognito_region"));
         String identityPoolId = (String) credentialsOptions.get("identity_pool_id");
-        String identityId = (String) credentialsOptions.get("identity_id");
-        String token = (String) credentialsOptions.get("token");
         // Setup the identity provider
         RNS3CognitoIdentityProvider developerProvider = new RNS3CognitoIdentityProvider(null, identityPoolId, cognitoRegion);
-        developerProvider.setToken( token );
-        developerProvider.setIdentityId( identityId );
+        // If developer authenticated pass along the id/token
+        String identityId = (String) credentialsOptions.get("identity_id");
+        String token = (String) credentialsOptions.get("token");
+        if ( identityId != null && token != null ) {
+          developerProvider.setDeveloperAuthenticatedIdentity(identityId, token);
+        }
         // Setup the credentials provider
         if (!(Boolean) credentialsOptions.get("caching")) {
           credentialsProvider = new CognitoCredentialsProvider(developerProvider, cognitoRegion);
@@ -219,11 +222,12 @@ public class RNS3TransferUtility extends ReactContextBaseJavaModule {
     Map<String, Object> credentialsOptions = new HashMap<String, Object>();
     credentialsOptions.put("type", CredentialType.COGNITO);
     credentialsOptions.put("identity_pool_id", options.getString("identity_pool_id"));
-    credentialsOptions.put("identity_id", options.getString("identity_id"));
-    credentialsOptions.put("token", options.getString("token"));
     credentialsOptions.put("region", options.getString("region"));
     credentialsOptions.put("cognito_region", options.getString("cognito_region"));
-    credentialsOptions.put("caching", options.getBoolean("caching"));
+    credentialsOptions.put("caching", options.hasKey("caching") ? options.getBoolean("caching") : false);
+    // Optional params if using developer authenticated cognito identities.
+    credentialsOptions.put("identity_id", options.hasKey("identity_id") ? options.getString("identity_id") : null);
+    credentialsOptions.put("token", options.hasKey("token") ? options.getString("token") : null);
     promise.resolve(setup(credentialsOptions));
   }
 

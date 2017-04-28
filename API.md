@@ -28,11 +28,11 @@ Return: Promise - will resolve arguments:
 * `options` Object
   * `region` String - a S3 Region (default: eu-west-1)
   * `cognito_region` String - a Cognito Region (default: eu-west-1)
-  * `identity_pool_id` String - the Amazon Cogntio identity pool
+  * `identity_pool_id` String - the Amazon Cogntio identity pool  
+  * `caching` Boolean - use `CognitoCachingCredentialsProvider` instead of `CognitoCredentialsProvider` (default: false) __(Android)__
+  * `remember_last_instance` Boolean - keep the last transferUtility instance when JS reload (default: true) __(iOS)__
   * `identity_id` String - the IdentityID if providing developer authenticated credentials (optional)
   * `token` String - The Token if providing developer authenticated credentials (optional)
-  * `caching` Boolean - use `CognitoCachingCredentialsProvider` instead of `CognitoCredentialsProvider` __(Android)__
-  * `remember_last_instance` Boolean - keep the last transferUtility instance when JS reload (default: true) __(iOS)__
 
 Return: Promise - will resolve arguments:
 * Boolean - `true` or `false` depending on the setup successful.
